@@ -1,7 +1,9 @@
 package com.worldline.fpl.recruitment.controller.impl;
 
+import com.worldline.fpl.recruitment.controller.TransactionController;
+import com.worldline.fpl.recruitment.json.TransactionResponse;
+import com.worldline.fpl.recruitment.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,10 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.worldline.fpl.recruitment.controller.TransactionController;
-import com.worldline.fpl.recruitment.json.TransactionResponse;
-import com.worldline.fpl.recruitment.service.TransactionService;
 
 /**
  * Implementation of {@link TransactionController}
@@ -24,6 +22,7 @@ import com.worldline.fpl.recruitment.service.TransactionService;
 @Slf4j
 @RestController
 public class TransactionControllerImpl implements TransactionController {
+
 
 	private TransactionService transactionService;
 
@@ -44,5 +43,21 @@ public class TransactionControllerImpl implements TransactionController {
 		}
 		return ResponseEntity.ok().body(page);
 	}
+
+	@Override
+	public ResponseEntity<Page<TransactionResponse>> deleteTransaction(
+			@PathVariable("accountId") String accountId,
+			@PathVariable("transactionId") String transactionId,
+	        @PageableDefault Pageable p){
+
+            if (transactionService.deleteTransaction(accountId, transactionId)) {
+
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+			}
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
+	}
+
 
 }

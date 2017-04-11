@@ -1,9 +1,10 @@
 package com.worldline.fpl.recruitment.dao;
 
+import com.worldline.fpl.recruitment.entity.Transaction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.worldline.fpl.recruitment.entity.Transaction;
+import java.util.Optional;
 
 /**
  * Transaction repository
@@ -23,4 +24,27 @@ public interface TransactionRepository {
 	 * @return
 	 */
 	Page<Transaction> getTransactionsByAccount(String accountId, Pageable p);
+
+	/**
+	 * Check if an transaction exists
+	 *
+	 * @param transactionId
+	 *            the transaction id
+	 * @return true if the transaction exists
+	 */
+	boolean exists(String transactionId);
+
+	Optional<Transaction> findById(String transactionId);
+
+	/**
+	 * Remove a transaction
+	 *
+	 * @param transactionId
+	 *            the transaction id
+	 *
+	 */
+	boolean remove(String transactionId);
+
+
+
 }

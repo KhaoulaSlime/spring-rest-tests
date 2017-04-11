@@ -1,18 +1,19 @@
 package com.worldline.fpl.recruitment.service;
 
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
 import com.worldline.fpl.recruitment.dao.TransactionRepository;
 import com.worldline.fpl.recruitment.entity.Transaction;
 import com.worldline.fpl.recruitment.exception.ServiceException;
 import com.worldline.fpl.recruitment.json.ErrorCode;
 import com.worldline.fpl.recruitment.json.TransactionResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 /**
  * Transaction service
@@ -67,5 +68,43 @@ public class TransactionService {
 		result.setNumber(transaction.getNumber());
 		return result;
 	}
+
+	/**
+	 * Check if an transaction exists
+	 *
+	 * @param transactionId
+	 *            the transaction id
+	 * @return true if the transaction exists
+	 */
+	public boolean isTransactionExist(String transactionId) {
+		return transactionRepository.exists(transactionId);
+	}
+
+	/**
+	 * Remove a transaction by id
+	 *
+	 * @param transactionId
+	 *            the transaction id
+	 *
+	 */
+
+	public boolean deleteTransaction(String accountId, String transactionId){
+
+		if (!accountService.isAccountExist(accountId)) {
+			ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+			throw new ServiceException(ErrorCode.INVALID_ACCOUNT,
+					"Account doesn't exist");
+		}
+
+		if (!isTransactionExist(transactionId)) {
+			throw new ServiceException(ErrorCode.INVALID_TRANSACTION,
+					"Transaction doesn't exist");
+		}
+		 if(transactionRepository.remove(transactionId)){
+			 return true;
+		 }
+		     return false;
+	}
+
 
 }

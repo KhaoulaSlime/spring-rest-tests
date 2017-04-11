@@ -1,16 +1,16 @@
 package com.worldline.fpl.recruitment.tests;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
+import org.springframework.http.MediaType;
 
 import java.io.IOException;
 import java.io.StringWriter;
 
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
-import org.springframework.http.MediaType;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Account test
@@ -94,9 +94,22 @@ public class AdminTransactionTest extends AbstractTest {
 
 	@Test
 	public void deleteUnexistingTransaction() throws Exception {
-		mockMvc.perform(delete("/accounts/1/transactions/1")).andExpect(
+		mockMvc.perform(delete("/accounts/1/transactions/4")).andExpect(
 				status().isNotFound());
 	}
+
+	/**
+	 * New test function for delete transaction methods
+	 *
+     */
+	@Test
+	public void deleteTransactionWhichBelongToUnexistingAccount() throws Exception {
+		mockMvc.perform(get("/accounts/3/transactions"))
+				.andExpect(jsonPath("$.errorCode", is("INVALID_ACCOUNT")));
+	}
+
+
+
 
 	/**
 	 * Get json request from test file
