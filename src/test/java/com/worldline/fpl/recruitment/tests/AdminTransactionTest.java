@@ -108,8 +108,16 @@ public class AdminTransactionTest extends AbstractTest {
 				.andExpect(jsonPath("$.errorCode", is("INVALID_ACCOUNT")));
 	}
 
-
-
+	/**
+	 * Create transaction new tests
+	 * @throws
+	 */
+    @Test
+	public void createTransactionOnUnexistingAccount() throws Exception {
+		mockMvc.perform(get("/accounts/3/transactions"))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.errorCode", is("INVALID_ACCOUNT")));
+	}
 
 	/**
 	 * Get json request from test file

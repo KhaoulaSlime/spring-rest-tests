@@ -1,5 +1,6 @@
 package com.worldline.fpl.recruitment.controller;
 
+import com.worldline.fpl.recruitment.entity.Transaction;
 import com.worldline.fpl.recruitment.json.ErrorResponse;
 import com.worldline.fpl.recruitment.json.TransactionResponse;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -62,7 +64,19 @@ public interface TransactionController {
 			 @ApiParam("Pageable information") @PageableDefault Pageable p);
 
 
-
+	/**
+	 * Add transaction
+	 *
+	 * @param accountId
+	 * 			  the account id
+	 * @param transaction
+	 *            the new transaction to add
+	 */
+	@RequestMapping(value="", method = RequestMethod.POST)
+	@ApiOperation(value = "Add transaction")
+	ResponseEntity<Page<TransactionResponse>> createTransaction(
+			@PathVariable("accountId") String accountId,
+			@RequestBody Transaction transaction);
 
 
 }

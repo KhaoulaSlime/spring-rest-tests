@@ -107,5 +107,29 @@ public class TransactionService {
 		     return false;
 	}
 
+	/**
+	 * Add a new transaction to an account
+	 *
+	 * @param accountId
+	 *            the account id
+	 * @return
+	 */
+
+	public void addTransaction(String accountId, Transaction transaction){
+		if (!accountService.isAccountExist(accountId)) {
+			throw new ServiceException(ErrorCode.INVALID_ACCOUNT,
+					"Account doesn't exist");
+		}
+
+		Transaction transact = new Transaction();
+		transaction.setAccountId(accountId);
+		transaction.setId("4");
+		transaction.setBalance(transaction.getBalance());
+		transaction.setNumber(transaction.getNumber());
+
+		transactionRepository.add(transaction);
+
+
+	}
 
 }

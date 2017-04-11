@@ -45,6 +45,13 @@ public interface TransactionRepository {
 	 */
 	boolean remove(String transactionId);
 
-
+	/**
+	 * Add a new transaction
+	 *
+	 * @param transact
+	 *            the new transaction to add
+	 *
+	 */
+	void add(Transaction transact);
 
 }

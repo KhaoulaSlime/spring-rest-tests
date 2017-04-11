@@ -1,6 +1,7 @@
 package com.worldline.fpl.recruitment.controller.impl;
 
 import com.worldline.fpl.recruitment.controller.TransactionController;
+import com.worldline.fpl.recruitment.entity.Transaction;
 import com.worldline.fpl.recruitment.json.TransactionResponse;
 import com.worldline.fpl.recruitment.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -58,6 +60,18 @@ public class TransactionControllerImpl implements TransactionController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
 	}
+
+	@Override
+	public ResponseEntity<Page<TransactionResponse>> createTransaction(
+			@PathVariable("accountId") String accountId,
+			@RequestBody Transaction transaction){
+		if(transaction.getBalance() == null || transaction.getNumber()== null){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+		transactionService.addTransaction(accountId,transaction);
+		return ResponseEntity.status(HttpStatus.CREATED).body(null);
+	}
+
 
 
 }

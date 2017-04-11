@@ -83,5 +83,9 @@ public class TransactionRepositoryImpl implements TransactionRepository,
 		return false;
 	}
 
+	@Override
+	public void add(Transaction transact) {
 
+		transactions.add(transact);
+	}
 }
