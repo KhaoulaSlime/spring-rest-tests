@@ -76,6 +76,7 @@ public class TransactionService {
 	 *            the transaction id
 	 * @return true if the transaction exists
 	 */
+	
 	public boolean isTransactionExist(String transactionId) {
 		return transactionRepository.exists(transactionId);
 	}
