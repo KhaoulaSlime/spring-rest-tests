@@ -119,6 +119,7 @@ public class AdminTransactionTest extends AbstractTest {
 				.andExpect(jsonPath("$.errorCode", is("INVALID_ACCOUNT")));
 	}
 
+
 	/**
 	 * Get json request from test file
 	 * 

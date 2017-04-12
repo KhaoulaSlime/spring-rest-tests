@@ -73,16 +73,15 @@ public class TransactionControllerImpl implements TransactionController {
 	}
 
 	@Override
-	public ResponseEntity<Page<TransactionResponse>> updateTransaction(
+	public ResponseEntity updateTransaction(
 			@PathVariable("accountId") String accountId,
 			@PathVariable("transactionId") String transactionId,
-			@RequestBody Transaction transaction,
-			@PageableDefault Pageable p){
+			@RequestBody Transaction transaction){
 		if(transaction.getBalance() == null || transaction.getNumber()== null){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
 
-		if(transactionService.updateTransaction(accountId,transactionId,transaction,p)){
+		if(transactionService.updateTransaction(accountId,transactionId,transaction)){
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 
 		}

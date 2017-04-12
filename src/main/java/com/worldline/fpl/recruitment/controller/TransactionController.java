@@ -88,11 +88,10 @@ public interface TransactionController {
 	 */
 	@RequestMapping(value="/{transactionId}", method = RequestMethod.PUT, produces = {"application/json"})
 	@ApiOperation(value = "Update transaction")
-	ResponseEntity<Page<TransactionResponse>> updateTransaction(
+	ResponseEntity updateTransaction(
 			@PathVariable("accountId") String accountId,
 			@PathVariable("transactionId") String transactionId,
-			@RequestBody Transaction transaction,
-			@PageableDefault Pageable p);
+			@RequestBody Transaction transaction);
 
 
 }

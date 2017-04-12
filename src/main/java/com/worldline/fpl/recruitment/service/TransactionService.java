@@ -139,7 +139,7 @@ public class TransactionService {
 	 *            the transaction Id
 	 */
 
-	public boolean updateTransaction(String accountId,String transactionId, Transaction transaction,Pageable p){
+	public boolean updateTransaction(String accountId,String transactionId, Transaction transaction){
 		if (!accountService.isAccountExist(accountId)) {
 			throw new ServiceException(ErrorCode.INVALID_ACCOUNT,
 					"Account doesn't exist");
