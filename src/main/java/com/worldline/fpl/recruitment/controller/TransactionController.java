@@ -74,9 +74,25 @@ public interface TransactionController {
 	 */
 	@RequestMapping(value="", method = RequestMethod.POST)
 	@ApiOperation(value = "Add transaction")
-	ResponseEntity<Page<TransactionResponse>> createTransaction(
+	ResponseEntity  createTransaction(
 			@PathVariable("accountId") String accountId,
 			@RequestBody Transaction transaction);
+
+	/**
+	 * Update transaction
+	 *
+	 * @param accountId
+	 * 			  the account id
+	 * @param transactionId
+	 *            the id for the transaction which we want update
+	 */
+	@RequestMapping(value="/{transactionId}", method = RequestMethod.PUT, produces = {"application/json"})
+	@ApiOperation(value = "Update transaction")
+	ResponseEntity<Page<TransactionResponse>> updateTransaction(
+			@PathVariable("accountId") String accountId,
+			@PathVariable("transactionId") String transactionId,
+			@RequestBody Transaction transaction,
+			@PageableDefault Pageable p);
 
 
 }

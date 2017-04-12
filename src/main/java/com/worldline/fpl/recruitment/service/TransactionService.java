@@ -121,7 +121,6 @@ public class TransactionService {
 					"Account doesn't exist");
 		}
 
-		Transaction transact = new Transaction();
 		transaction.setAccountId(accountId);
 		transaction.setId("4");
 		transaction.setBalance(transaction.getBalance());
@@ -129,6 +128,33 @@ public class TransactionService {
 
 		transactionRepository.add(transaction);
 
+
+	}
+	/**
+	 * Update a transaction
+	 *
+	 * @param accountId
+	 *            the account id
+	 * @param transactionId
+	 *            the transaction Id
+	 */
+
+	public boolean updateTransaction(String accountId,String transactionId, Transaction transaction,Pageable p){
+		if (!accountService.isAccountExist(accountId)) {
+			throw new ServiceException(ErrorCode.INVALID_ACCOUNT,
+					"Account doesn't exist");
+		}
+		if (!isTransactionExist(transactionId)) {
+			throw new ServiceException(ErrorCode.INVALID_TRANSACTION,
+					"Transaction doesn't exist");
+		}
+		transaction.setAccountId(accountId);
+		transaction.setId(transactionId);
+
+		if(transactionRepository.updateTransaction(transactionId,transaction)){
+			return  true;
+		}
+		    return  false;
 
 	}
 

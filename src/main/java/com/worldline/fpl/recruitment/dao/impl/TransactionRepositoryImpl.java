@@ -88,4 +88,18 @@ public class TransactionRepositoryImpl implements TransactionRepository,
 
 		transactions.add(transact);
 	}
+
+	@Override
+	public boolean updateTransaction(String transactionId,Transaction transaction){
+
+		Optional<Transaction> transact = findById(transactionId);
+		    if(transact != null) {
+
+			 int index = transactions.indexOf(transact.get());
+			 transactions.set(index,transaction);
+
+			  return true;
+		 }
+		return false;
+	}
 }

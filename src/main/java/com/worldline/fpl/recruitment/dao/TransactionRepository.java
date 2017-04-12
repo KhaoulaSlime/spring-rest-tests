@@ -54,4 +54,15 @@ public interface TransactionRepository {
 	 */
 	void add(Transaction transact);
 
+	/**
+	 * Update a transaction
+	 *
+	 * @param transactionId
+	 *            the transaction id
+	 * @param transaction
+	 * 			the value to update
+	 *
+	 */
+	boolean updateTransaction(String transactionId,Transaction transaction);
+
 }

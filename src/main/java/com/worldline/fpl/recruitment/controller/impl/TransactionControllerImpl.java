@@ -62,7 +62,7 @@ public class TransactionControllerImpl implements TransactionController {
 	}
 
 	@Override
-	public ResponseEntity<Page<TransactionResponse>> createTransaction(
+	public ResponseEntity  createTransaction(
 			@PathVariable("accountId") String accountId,
 			@RequestBody Transaction transaction){
 		if(transaction.getBalance() == null || transaction.getNumber()== null){
@@ -70,6 +70,23 @@ public class TransactionControllerImpl implements TransactionController {
 		}
 		transactionService.addTransaction(accountId,transaction);
 		return ResponseEntity.status(HttpStatus.CREATED).body(null);
+	}
+
+	@Override
+	public ResponseEntity<Page<TransactionResponse>> updateTransaction(
+			@PathVariable("accountId") String accountId,
+			@PathVariable("transactionId") String transactionId,
+			@RequestBody Transaction transaction,
+			@PageableDefault Pageable p){
+		if(transaction.getBalance() == null || transaction.getNumber()== null){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+
+		if(transactionService.updateTransaction(accountId,transactionId,transaction,p)){
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+
+		}
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
 	}
 
 
